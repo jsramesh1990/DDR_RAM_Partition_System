@@ -67,25 +67,25 @@ A sophisticated simulated DDR RAM memory management system with three distinct p
 ### Memory Layout
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                   768 MB DDR MEMORY                          │
+│                   768 MB DDR MEMORY                         │
 ├─────────────────────────────────────────────────────────────┤
 │  Partition 1: Gaming (256MB)                                │
-│  ├── Game State ┌── Textures ┌── Game Objects              │
-│  ├── Physics Data └── Audio └── Render Buffers             │
-│  │  Base: 0x00000000, End: 0x0FFFFFFF                     │
-│  │  Protection: READ | WRITE | EXECUTE                     │
+│  ├── Game State ┌── Textures ┌── Game Objects               │
+│  ├── Physics Data └── Audio └── Render Buffers              │
+│  │  Base: 0x00000000, End: 0x0FFFFFFF                       │
+│  │  Protection: READ | WRITE | EXECUTE                      │
 │                                                             │
-│  Partition 2: Read/Write (256MB)                           │
-│  ├── Data Blocks ┌── Cache ┌── Buffers                     │
-│  ├── File System └── Logs └── Temp Data                    │
-│  │  Base: 0x10000000, End: 0x1FFFFFFF                     │
-│  │  Protection: READ | WRITE                               │
+│  Partition 2: Read/Write (256MB)                            │
+│  ├── Data Blocks ┌── Cache ┌── Buffers                      │
+│  ├── File System └── Logs └── Temp Data                     │
+│  │  Base: 0x10000000, End: 0x1FFFFFFF                       │
+│  │  Protection: READ | WRITE                                │
 │                                                             │
-│  Partition 3: User Space (256MB)                           │
-│  ├── Applications ┌── Libraries ┌── Stack/Heap             │
-│  ├── GUI Apps └── Services └── User Data                  │
-│  │  Base: 0x20000000, End: 0x2FFFFFFF                     │
-│  │  Protection: READ | WRITE | EXECUTE                     │
+│  Partition 3: User Space (256MB)                            │
+│  ├── Applications ┌── Libraries ┌── Stack/Heap              │
+│  ├── GUI Apps └── Services └── User Data                    │
+│  │  Base: 0x20000000, End: 0x2FFFFFFF                       │
+│  │  Protection: READ | WRITE | EXECUTE                      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -229,31 +229,31 @@ gcc -o example_gaming example_gaming.c ../src/*.c -I../include
 ### System Startup Flow
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    SYSTEM STARTUP FLOW                       │
+│                    SYSTEM STARTUP FLOW                      │
 ├─────────────────────────────────────────────────────────────┤
-│ 1. POWER ON                                                │
-│    ├─ Boot ROM execution                                   │
-│    └─ Hardware initialization                              │
+│ 1. POWER ON                                                 │
+│    ├─ Boot ROM execution                                    │
+│    └─ Hardware initialization                               │
 │                                                             │
-│ 2. STARTUP CODE                                            │
-│    ├─ System initialization (CPU, clocks, peripherals)     │
-│    ├─ DDR memory detection and setup                       │
-│    └─ Memory controller configuration                      │
+│ 2. STARTUP CODE                                             │
+│    ├─ System initialization (CPU, clocks, peripherals)      │
+│    ├─ DDR memory detection and setup                        │
+│    └─ Memory controller configuration                       │
 │                                                             │
-│ 3. PARTITION CREATION                                      │
-│    ├─ Allocate 768MB DDR memory                            │
-│    ├─ Create three partitions (256MB each)                 │
-│    └─ Configure memory protection                          │
+│ 3. PARTITION CREATION                                       │
+│    ├─ Allocate 768MB DDR memory                             │
+│    ├─ Create three partitions (256MB each)                  │
+│    └─ Configure memory protection                           │
 │                                                             │
-│ 4. APPLICATION INITIALIZATION                              │
-│    ├─ Gaming: Load textures, init physics engine           │
-│    ├─ R/W: Setup data structures, allocate buffers         │
-│    └─ User Space: Load applications, setup environment     │
+│ 4. APPLICATION INITIALIZATION                               │
+│    ├─ Gaming: Load textures, init physics engine            │
+│    ├─ R/W: Setup data structures, allocate buffers          │
+│    └─ User Space: Load applications, setup environment      │
 │                                                             │
-│ 5. SYSTEM READY                                            │
-│    ├─ Enable interrupts                                    │
-│    ├─ Start main execution loop                            │
-│    └─ Begin monitoring and management                      │
+│ 5. SYSTEM READY                                             │
+│    ├─ Enable interrupts                                     │
+│    ├─ Start main execution loop                             │
+│    └─ Begin monitoring and management                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -326,17 +326,17 @@ Time      Process
 
 ### Inter-Partition Communication
 ```
-┌─────────────┐      Request      ┌─────────────┐
+┌─────────────┐      Request       ┌─────────────┐
 │  Gaming     │───────────────────►│  Read/Write │
-│  Partition  │                   │  Partition  │
+│  Partition  │                    │  Partition  │
 │             │◄───────────────────┤             │
-└─────────────┘      Response     └─────────────┘
+└─────────────┘      Response      └─────────────┘
         │                               │
         │        Configuration          │
         ▼                               ▼
 ┌─────────────┐      Data Sync     ┌─────────────┐
 │  User Space │───────────────────►│ All Partitions
-│  Partition  │                   │             │
+│  Partition  │                    │             │
 │             │◄───────────────────┤             │
 └─────────────┘    Status Updates  └─────────────┘
 ```

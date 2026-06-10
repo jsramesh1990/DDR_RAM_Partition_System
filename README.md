@@ -663,9 +663,6 @@ Thanks to these amazing people who have contributed to this project:
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/yourusername/ddr-ram-partition-system)
 ![GitHub Release](https://img.shields.io/github/v/release/yourusername/ddr-ram-partition-system)
 
-##  Contact
-
-- **Email**: js.ramesh1990@gmail.com
 
 ##  Acknowledgments
 
